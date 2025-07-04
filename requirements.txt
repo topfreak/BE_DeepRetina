@@ -1,0 +1,20 @@
+# FastAPI framework and server
+fastapi
+uvicorn[standard]
+
+# Database
+sqlalchemy
+psycopg2-binary
+
+# Data validation and security
+pydantic
+passlib[bcrypt]
+python-jose[cryptography]
+
+# Machine Learning and Image Processing
+tensorflow
+numpy
+Pillow
+
+# Hugging Face client library
+huggingface-hub

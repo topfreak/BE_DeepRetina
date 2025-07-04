@@ -1,0 +1,28 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+*.venv
+env/
+.env
+
+# Local database file
+*.db
+*.sqlite
+*.sqlite3
+
+# Large model files
+*.h5
+*.pkl
+*.pt
+*.pb
+*.onnx
+
+# IDE and OS specific files
+.vscode/
+.idea/
+.DS_Store
