@@ -1,6 +1,7 @@
 # FastAPI framework and server
 fastapi
 uvicorn[standard]
+python-multipart
 
 # Database
 sqlalchemy
