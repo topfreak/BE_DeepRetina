@@ -191,11 +191,11 @@ def create_model():
     input_layer = Input(shape=(256, 256, 3), name='input_image')
     densenet_input = Lambda(preprocess_densenet)(input_layer)
     effnet_input = Lambda(preprocess_effnet)(input_layer)
-    densenet_base = DenseNet121(include_top=False, weights=None, input_tensor=densenet_input)
+    densenet_base = DenseNet121(include_top=False, weights=None, ...)
     for layer in densenet_base.layers[:60]:
         layer.trainable = False
     densenet_out = GlobalAveragePooling2D()(densenet_base.output)
-    effnet_base = EfficientNetB0(include_top=False, weights=None, input_tensor=effnet_input)
+    effnet_base = EfficientNetB0(include_top=False, weights=None, ...)
     for layer in effnet_base.layers[:60]:
         layer.trainable = False
     effnet_out = GlobalAveragePooling2D()(effnet_base.output)
