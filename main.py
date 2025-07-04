@@ -189,24 +189,38 @@ model = None
 def create_model():
     """Membangun arsitektur model Keras sesuai dengan notebook."""
     input_layer = Input(shape=(256, 256, 3), name='input_image')
+
+    # Preprocessing untuk masing-masing backbone
     densenet_input = Lambda(preprocess_densenet)(input_layer)
     effnet_input = Lambda(preprocess_effnet)(input_layer)
-    densenet_base = DenseNet121(include_top=False, weights=None, ...)
+
+    # DenseNet121 - Bangun arsitektur saja, tanpa bobot ImageNet
+    densenet_base = DenseNet121(include_top=False, weights=None, input_tensor=densenet_input)
     for layer in densenet_base.layers[:60]:
         layer.trainable = False
     densenet_out = GlobalAveragePooling2D()(densenet_base.output)
-    effnet_base = EfficientNetB0(include_top=False, weights=None, ...)
+
+    # EfficientNetB0 - Bangun arsitektur saja, tanpa bobot ImageNet
+    effnet_base = EfficientNetB0(include_top=False, weights=None, input_tensor=effnet_input)
     for layer in effnet_base.layers[:60]:
         layer.trainable = False
     effnet_out = GlobalAveragePooling2D()(effnet_base.output)
+
+    # Gabungkan fitur dari kedua backbone
     merged = Concatenate()([densenet_out, effnet_out])
+
+    # Fully connected layers
     x = Dense(256, activation='relu')(merged)
     x = BatchNormalization()(x)
     x = Dropout(0.4)(x)
     x = Dense(128, activation='relu')(x)
     x = BatchNormalization()(x)
     x = Dropout(0.3)(x)
+
+    # Output layer
     output = Dense(5, activation='softmax')(x)
+
+    # Buat dan compile model
     created_model = Model(inputs=input_layer, outputs=output)
     created_model.compile(
         optimizer=AdamW(learning_rate=1e-5, weight_decay=1e-5),

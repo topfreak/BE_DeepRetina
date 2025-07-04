@@ -13,7 +13,7 @@ passlib[bcrypt]
 python-jose[cryptography]
 
 # Machine Learning and Image Processing
-tensorflow
+tensorflow-cpu
 numpy
 Pillow
 
